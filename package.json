@@ -1,0 +1,17 @@
+{
+  "name": "shadowfax-portal-bot",
+  "version": "1.0.0",
+  "description": "Puppeteer automation server for Shadowfax internal portals",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "puppeteer": "^21.6.1",
+    "dotenv": "^16.3.1"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
