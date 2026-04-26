@@ -7,7 +7,7 @@ const LOGIN_URL = 'https://valinor.shadowfax.in/login';
 async function startLogin() {
   const page = await getPage();
   console.log('Navigating to login page...');
-  await page.goto(LOGIN_URL, { waitUntil: 'networkidle2', timeout: 30000 });
+  await page.goto(LOGIN_URL, { waitUntil: 'networkidle2', timeout: 60000 });
 
   // Wait for mobile input and enter number
   await page.waitForSelector(
