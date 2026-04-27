@@ -51,4 +51,4 @@ async function completeLogin(otp) {
   return { success: true, message: 'Logged in and session saved' };
 }
 
-module.exports = { startLogin, completeLogin };
+module.exports = { startLogin, completeLogin, startSupportLogin, completeSupportLogin };
