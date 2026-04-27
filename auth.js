@@ -42,9 +42,10 @@ async function completeLogin(otp) {
   const buttons = await page.$$('button');
   const lastBtn = buttons[buttons.length - 1];
   await lastBtn.click();
-
-  await page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 60000 });
+  
+  await page.waitForTimeout(8000);
   await saveCookies();
+
 
   console.log('Login successful');
   return { success: true, message: 'Logged in and session saved' };
