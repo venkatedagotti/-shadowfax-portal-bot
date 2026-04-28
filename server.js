@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const { isSessionSaved } = require('./browser');
-const { startLogin, completeLogin } = require('./auth');
+const { startLogin, completeLogin, startSupportLogin, completeSupportLogin } = require('./auth');
 const { checkCodPendency, checkRiderDetails } = require('./support');
 const { setRiderIP } = require('./rms');
 
@@ -90,4 +90,23 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Shadowfax Portal Bot running on port ${PORT}`);
   console.log(`Session saved: ${isSessionSaved()}`);
+});
+app.post('/login/support/start', async (req, res) => {
+  try {
+    const result = await startSupportLogin();
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
+});
+
+app.post('/login/support/complete', async (req, res) => {
+  const { otp } = req.body;
+  if (!otp) return res.status(400).json({ error: 'otp is required' });
+  try {
+    const result = await completeSupportLogin(otp);
+    res.json(result);
+  } catch (e) {
+    res.status(500).json({ success: false, error: e.message });
+  }
 });
