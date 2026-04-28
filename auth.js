@@ -50,5 +50,30 @@ async function completeLogin(otp) {
   console.log('Login successful');
   return { success: true, message: 'Logged in and session saved' };
 }
+async function startSupportLogin() {
+  const page = await getPage();
+  await page.goto('https://support.shadowfax.in', { waitUntil: 'networkidle2', timeout: 30000 });
+  await page.waitForSelector('input', { timeout: 15000 });
+  const inputs = await page.$$('input');
+  await inputs[0].click({ clickCount: 3 });
+  await inputs[0].type(MOBILE, { delay: 80 });
+  const buttons = await page.$$('button');
+  await buttons[0].click();
+  return { success: true, message: `Support OTP sent to ${MOBILE}` };
+}
+
+async function completeSupportLogin(otp) {
+  const page = await getPage();
+  await page.waitForTimeout(2000);
+  const inputs = await page.$$('input');
+  const otpInput = inputs[inputs.length - 1];
+  await otpInput.click({ clickCount: 3 });
+  await otpInput.type(String(otp), { delay: 80 });
+  const buttons = await page.$$('button');
+  await buttons[buttons.length - 1].click();
+  await page.waitForTimeout(8000);
+  await saveCookies();
+  return { success: true, message: 'Support portal logged in' };
+}
 
 module.exports = { startLogin, completeLogin, startSupportLogin, completeSupportLogin };
